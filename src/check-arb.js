@@ -50,7 +50,7 @@ function checkOpportunity(prices) {
 function SaveFile(prices) {
     // console.log(prices);
     var txtPrices = JSON.stringify(prices);
-    fs.writeFile('src/lastFetchedData.json', txtPrices, 'utf-8', function(err) {
+    fs.writeFile('dados/lastFetchedData.json', txtPrices, 'utf-8', function(err) {
         if (err) throw err;
         // console.log('The file has been saved!');
     })
