@@ -1,8 +1,7 @@
 "use strict";
-
 const foxbit = require('./exchange/foxbit');
 const flowbtc = require('./exchange/flowbtc');
-const mercado = require('./exchange/mercado');
+const mercado = require('./exchange/mercado1');
 const braziliex = require('./exchange/braziliex');
 const negociecoins = require('./exchange/negociecoins');
 
@@ -13,7 +12,7 @@ async function fetchData() {
     console.log('Procurando oportunidades....');
     try {
         Promise.all([
-                // wait foxbit(),
+                await foxbit(),
                 // await flowbtc(), Erro 403
                 await mercado(),
                 await braziliex(),

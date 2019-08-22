@@ -11,6 +11,8 @@
     "dependencies": {
         "beepbeep": "^1.2.1",
         "ccxt": "^1.18.1078",
-        "lodash": "^4.17.4"
+        "lodash": "^4.17.4",
+        "tslint": "^5.19.0",
+        "typescript": "^3.5.3"
     }
 }

@@ -12,18 +12,20 @@ function checkOpportunity(prices) {
     var bestBid = lodash.maxBy(prices, function(item) { return item.bid })
     var bestAsk = lodash.minBy(prices, function(item) { return item.ask })
 
-    console.log(`Melhor bid (preço de venda): ${bestBid.bid.toFixed(2)}`);
-    console.log(`Melhor ask (preço de compra): ${bestAsk.ask.toFixed(2)}`);
+    console.log('');
+    console.log(`Melhor ask (preço de compra): ${bestAsk.ask.toFixed(2)} na ${bestAsk.name}`);
+    console.log(`Melhor bid (preço de venda) : ${bestBid.bid.toFixed(2)} na ${bestBid.name}`);
 
 
     if (bestBid.bid > bestAsk.ask) {
+        console.log('');
 
         console.log('Possíveis Oportunidades. Verificando custo para comprar ' + amount + ' bitcoins....');
 
         var priceDifference = (bestBid.bid * amount) - (bestAsk.ask * amount);
-        console.log('Ganha-se na arbitragem: R$', priceDifference.toFixed(2),
-            'comprando na', bestAsk.name, 'por: R$', bestAsk.ask.toFixed(2),
-            'e vendendo na', bestBid.name, 'por: R$', bestBid.bid.toFixed(2));
+        console.log('comprando  por:         R$', bestAsk.ask.toFixed(2), 'na', bestAsk.name);
+        console.log('e vendendo por:         R$', bestBid.bid.toFixed(2), 'na', bestBid.name);
+        console.log('Ganha-se na arbitragem: R$  ', priceDifference.toFixed(2));
 
 
         var buyCost = bestAsk.ask * amount * bestAsk.cost;
@@ -31,9 +33,9 @@ function checkOpportunity(prices) {
         var sellCost = bestBid.bid * amount * bestBid.cost;
         // console.log('Custo Venda: ', sellCost);
         var totalCost = buyCost + sellCost;
-        console.log('Custo Total de taxas: ', totalCost.toFixed(2));
+        console.log('Custo Total de taxas:   R$  ', totalCost.toFixed(2));
 
-        console.log('O que dá uma diferença de', (priceDifference.toFixed(2) - totalCost.toFixed(2)).toFixed(2));
+        console.log('O que dá uma diferença: R$ ', (priceDifference.toFixed(2) - totalCost.toFixed(2)).toFixed(2));
 
         if (totalCost < priceDifference) {
             console.log('Compre na ', bestAsk.name, 'e venda na ', bestBid.name);
