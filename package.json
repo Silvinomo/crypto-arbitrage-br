@@ -10,7 +10,7 @@
     "license": "GPL-3.0",
     "dependencies": {
         "beepbeep": "^1.2.1",
-        "ccxt": "^1.10.97",
+        "ccxt": "^1.18.1078",
         "lodash": "^4.17.4"
     }
 }
