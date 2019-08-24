@@ -10,7 +10,7 @@ async function fetchDatamercado() {
     // console.log(Tickers.asks);
 
     return {
-        name: 'foxbit',
+        name: 'mercado',
         cost: 0.005,
         bid: market.bid,
         ask: market.ask

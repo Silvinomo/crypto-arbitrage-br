@@ -12,7 +12,7 @@ async function OndeCompra() {
         let mercadoBitcoin = new MercadoBitcoin();
 
         Promise.all([
-            await foxbit(),
+            // await foxbit(),
             // await flowbtc(), Erro 403
             await mercadoBitcoin.fetchTicker(),
             await braziliex(),
