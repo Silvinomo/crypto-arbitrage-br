@@ -2,17 +2,21 @@
 var lodash = require('lodash');
 var fs = require('fs');
 var beep = require('beepbeep');
+const state = require('./state.js')
 
-function checkOpportunity(prices, pSaldo) {
+function checkOpportunity(prices, pContent) {
 
     SaveFile(prices);
 
-    var vSaldo = parseFloat(pSaldo);
+    var vSaldo = parseFloat(pContent.saldos[0].saldo);
+    var vNumeroArbitragens = pContent.saldos[0].numeroarbitragens;
+
+    let vContent = pContent;
 
     var bestBid = lodash.maxBy(prices, function(item) { return item.bid })
     var bestAsk = lodash.minBy(prices, function(item) { return item.ask })
 
-    let amount = (pSaldo / bestAsk.ask);
+    let amount = (vSaldo / bestAsk.ask);
 
     console.log('  ');
     console.log(`  Melhor ask (preço de compra): ${bestAsk.ask.toFixed(2)} na ${bestAsk.name}`);
@@ -45,6 +49,25 @@ function checkOpportunity(prices, pSaldo) {
 
         if (totalCost < priceDifference) {
             vSaldo = (vSaldo + diferenca);
+            vNumeroArbitragens = (vNumeroArbitragens + 1);
+
+            vContent.saldos[0].saldo = vSaldo.toFixed(2);
+            vContent.saldos[0].numeroarbitragens = vNumeroArbitragens;
+            vContent.arbitragens.push({
+                'codigo': vNumeroArbitragens,
+                'compra': bestAsk.name,
+                'venda': bestBid.name,
+                'valorcompra': bestAsk.ask.toFixed(2),
+                'valorvenda': bestBid.bid.toFixed(2),
+                'investimento': vSaldo.toFixed(2),
+                'custos': totalCost.toFixed(2),
+                'lucro': priceDifference.toFixed(2),
+                'porcentagem': percentual.toFixed(4)
+            });
+
+            state.save(vContent);
+
+
             console.log('  Compre na ', bestAsk.name, 'e venda na ', bestBid.name);
             beep(2)
         } else {
@@ -56,24 +79,8 @@ function checkOpportunity(prices, pSaldo) {
         console.log('  Não há oportunidades', '\n\n');
         vSaldo = vSaldo;
     }
-    return vSaldo;
-}
 
-function LerSaldo() {
-    fs.readFile('dados/saldo.json', txtsaldo, 'utf-8', function(err) {
-        return txtsaldo;
-        if (err) throw err;
-        // console.log('  The file has been saved!');
-    })
-}
-
-function GravarSaldo(saldo) {
-    // console.log(prices);
-    var txtsaldo = JSON.stringify(saldo);
-    fs.writeFile('dados/saldo.json', txtsaldo, 'utf-8', function(err) {
-        if (err) throw err;
-        // console.log('  The file has been saved!');
-    })
+    return vContent;
 }
 
 

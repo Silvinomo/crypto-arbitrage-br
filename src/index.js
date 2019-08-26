@@ -6,10 +6,12 @@ const braziliex = require('./exchange/braziliex');
 const negociecoins = require('./exchange/negociecoins');
 
 const checkArb = require('./check-arb');
+const state = require('./state.js')
 
-let VSaldo = 1000;
+const content = state.load();
 
-async function fetchData(pSaldo) {
+async function fetchData(pContent) {
+
     console.log('  Procurando oportunidades....');
     try {
         Promise.all([
@@ -20,20 +22,20 @@ async function fetchData(pSaldo) {
                 await negociecoins()
             ])
             .then((response) => {
-                pSaldo = checkArb(response, pSaldo);
+                pContent = checkArb(response, pContent);
                 console.log('  Aguardando 1 minuto para procurar oportunidade novamente.');
                 console.log('  ---------------------------------------------------------')
-                setTimeout(fetchData, 60000, pSaldo);
+                setTimeout(fetchData, 60000, pContent);
             })
             .catch((err) => {
                 console.error(`Erro: ${err.message}`);
                 console.log('  Aguardando 1 minuto para procurar oportunidade novamente.')
-                setTimeout(fetchData, 60000, pSaldo);
+                setTimeout(fetchData, 60000, pContent);
             });
     } catch (err) {
         console.error(err.message);
-        setTimeout(fetchData, 120000, pSaldo);
+        setTimeout(fetchData, 120000, pContent);
     }
 }
 
-fetchData(VSaldo);
+fetchData(content);
