@@ -15,7 +15,7 @@ async function fetchData(pContent) {
     console.log('  Procurando oportunidades....');
     try {
         Promise.all([
-                // await foxbit(),
+                await foxbit(),
                 // await flowbtc(), Erro 403
                 await mercado(),
                 await braziliex(),

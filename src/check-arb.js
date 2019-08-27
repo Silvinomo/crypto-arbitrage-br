@@ -64,22 +64,17 @@ function checkOpportunity(prices, pContent) {
                 'lucro': priceDifference.toFixed(2),
                 'porcentagem': percentual.toFixed(4)
             });
-
             state.save(vContent);
-
 
             console.log('  Compre na ', bestAsk.name, 'e venda na ', bestBid.name);
             beep(2)
         } else {
             console.log('  O custo não justifica', '\n\n');
-            vSaldo = vSaldo;
         }
 
     } else {
         console.log('  Não há oportunidades', '\n\n');
-        vSaldo = vSaldo;
     }
-
     return vContent;
 }
 
